@@ -5,9 +5,9 @@ import java.util.Objects;
 import java.util.StringJoiner;
 
 public class Event {
-    private Type type;
-    private String branch;
-    private List<Commit> commits;
+    private final Type type;
+    private final String branch;
+    private final List<Commit> commits;
 
     public Event(final Type type, final String branch, final List<Commit> commits) {
         this.type = type;
@@ -55,7 +55,7 @@ public class Event {
     @Override
     public String toString() {
         return new StringJoiner(", ", Event.class.getSimpleName() + "[", "]")
-                .add(type.toString())
+                .add(type.name())
                 .add(branch)
                 .add(commits.toString())
                 .toString();

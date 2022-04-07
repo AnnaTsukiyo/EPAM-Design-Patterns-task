@@ -4,20 +4,30 @@ import java.util.Arrays;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Commit{
-    private String author;
-    private String[] changes;
+public class Commit {
+    private String branch;
+    private final String author;
+    private final String[] changes;
 
-    public Commit(final String author, final String[] changes) {
+    public Commit(String branch, final String author, final String[] changes) {
+        this.branch = branch;
         this.author = author;
         this.changes = changes;
     }
 
-    String author(){
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    String branch() {
+        return branch;
+    }
+
+    String author() {
         return author;
     }
 
-    String[] changes(){
+    String[] changes() {
         return changes;
     }
 
@@ -29,6 +39,7 @@ public class Commit{
         final Commit commit = (Commit) o;
 
         if (!Objects.equals(author, commit.author)) return false;
+        if (!Objects.equals(branch, commit.branch)) return false;
         // Probably incorrect - comparing Object[] arrays with Arrays.equals
         return Arrays.equals(changes, commit.changes);
     }
