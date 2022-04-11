@@ -29,13 +29,13 @@ public class NewRepository implements Repository {
     }
 
     private void addCommitToBranch(Commit commit, String branch) {
-        Set<Commit> commitsSet = this.commits.get(branch);
-        if (commitsSet != null) {
-            commitsSet.add(commit);
+        Set<Commit> commits = this.commits.get(branch);
+        if (commits != null) {
+            commits.add(commit);
         } else {
-            commitsSet = new HashSet<>();
-            commitsSet.add(commit);
-            this.commits.put(branch, commitsSet);
+            commits = new HashSet<>();
+            commits.add(commit);
+            this.commits.put(branch, commits);
         }
     }
 
@@ -60,14 +60,14 @@ public class NewRepository implements Repository {
     }
 
     private boolean isNotInBranch(Commit commit, String targetBranch) {
-        Set<Commit> commitsSet = this.commits.get(targetBranch);
-        return commitsSet == null || !commitsSet.contains(commitsSet);
+        Set<Commit> commits = this.commits.get(targetBranch);
+        return commits == null || !commits.contains(commit);
     }
 
     private void notifyHooksAboutMerge(String branch, List<Commit> targetBranchCommits) {
         webHooks.stream()
                 .filter(webHook -> webHook.type().equals(MERGE) && webHook.branch().equals(branch) && !targetBranchCommits.isEmpty())
-                .forEach(webHook -> webHook.onEvent(new Event(COMMIT, "branch", targetBranchCommits)));
+                .forEach(webHook -> webHook.onEvent(new Event(MERGE, branch, targetBranchCommits)));
     }
 
     @Override

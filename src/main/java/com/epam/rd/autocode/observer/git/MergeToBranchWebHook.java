@@ -17,9 +17,7 @@ public class MergeToBranchWebHook implements WebHook {
     }
 
     @Override
-    public Event.Type type() {
-        return Event.Type.MERGE;
-    }
+    public Event.Type type() {return Event.Type.MERGE;}
 
     @Override
     public List<Event> caughtEvents() {
